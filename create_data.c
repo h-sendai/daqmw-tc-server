@@ -47,7 +47,7 @@ struct raw_data create_data(unsigned int trigger_count)
 
     /* 
      * return struct
-     * about returning struct *
+     * about returning struct
      * see "The C Programming Language: Chapter 6, Section 2"
      * "Copy and assignment include passing arguments to functions and returning
      * values from function as well"
