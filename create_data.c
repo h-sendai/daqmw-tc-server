@@ -13,13 +13,6 @@
 #include <unistd.h>
 
 #include "raw_data.h"
-//struct raw_data {
-//    unsigned int   magic_word;
-//    unsigned int   data_length;
-//    unsigned int   trigger_count;
-//    unsigned short event_data[4*1024]; /* 4: number of channel.  1024: number of samples */
-//    unsigned int   footer;
-//};
 
 struct raw_data create_data(unsigned int trigger_count)
 {
