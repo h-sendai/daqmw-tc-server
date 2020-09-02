@@ -13,6 +13,7 @@
 
 #include "my_socket.h"
 #include "my_signal.h"
+#include "raw_data.h"
 
 int debug = 0;
 
@@ -47,17 +48,17 @@ void sig_chld(int signo)
 
 int child_proc(int sockfd, int data_rate)
 {
-    unsigned char buf[4096];
+    struct raw_data raw_data;
 
     if (debug) {
         fprintf(stderr, "child_proc\n");
     }
 
-    memset(buf, 0xff, sizeof(buf));
-
     useconds_t usleep_time = 1000000 / data_rate;
+    unsigned int trigger_count = 0;
     for ( ; ; ) {
-        int n = write(sockfd, buf, sizeof(buf));
+        raw_data = create_data(trigger_count);
+        int n = write(sockfd, &raw_data, sizeof(raw_data));
         if (n < 0) {
             if (errno == ECONNRESET || errno == EPIPE) {
                 if (debug) {
@@ -71,6 +72,7 @@ int child_proc(int sockfd, int data_rate)
             err(1, "write returns 0");
         }
         usleep(usleep_time);
+        trigger_count += 1;
     }
 
     return 0;

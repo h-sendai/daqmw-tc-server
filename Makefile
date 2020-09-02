@@ -10,6 +10,7 @@ all: $(PROG)
 OBJS += $(PROG).o
 OBJS += my_socket.o
 OBJS += my_signal.o
+OBJS += create_data.o
 $(PROG): $(OBJS)
 
 clean:
