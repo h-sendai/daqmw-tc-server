@@ -58,6 +58,10 @@ int child_proc(int sockfd, int data_rate)
     unsigned int trigger_count = 0;
     for ( ; ; ) {
         raw_data = create_data(trigger_count);
+        /*
+         * We may write struct raw_data directly here
+         * because the structure does not have any padding.
+         */
         int n = write(sockfd, &raw_data, sizeof(raw_data));
         if (n < 0) {
             if (errno == ECONNRESET || errno == EPIPE) {
