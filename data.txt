@@ -27,8 +27,10 @@ struct raw_data {
     unsigned int   magic_word;
     unsigned int   data_length;
     unsigned int   trigger_count;
-    unsigned short event_data[4*1024]; /* 4: number of channle.  1024: number of samples */
+    unsigned short event_data[4*1024]; /* 4: number of channels.  1024: number of samples */
     unsigned int   footer;
 };
+
+Byte order is network byte order
 
 total 8208 bytes
