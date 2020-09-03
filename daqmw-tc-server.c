@@ -16,12 +16,14 @@
 #include "raw_data.h"
 
 int debug = 0;
+int daemon_mode = 0;
 
 /* command line interface */
 int usage()
 {
-    char msg[] = "daqmw-tc-server [-d] [-h] [-p port] [-t const|rec|sin] [-r hz]\n"
+    char msg[] = "daqmw-tc-server [-d] [-D] [-h] [-p port] [-t const|rec|sin] [-r hz]\n"
                  "-d: debug\n"
+                 "-D: daemon mode\n"
                  "-h: print help and exit\n"
                  "-p: port\n"
                  "-t: data type.\n"
@@ -90,10 +92,13 @@ int main(int argc, char *argv[])
     struct sockaddr_in remote;
     socklen_t addr_len = sizeof(struct sockaddr_in);
 
-    while ( (c = getopt(argc, argv, "dhp:t:")) != -1) {
+    while ( (c = getopt(argc, argv, "dDhp:t:")) != -1) {
         switch (c) {
             case 'd':
                 debug = 1;
+                break;
+            case 'D':
+                daemon_mode = 1;
                 break;
             case 'h':
                 usage();
@@ -114,6 +119,10 @@ int main(int argc, char *argv[])
 
     my_signal(SIGCHLD, sig_chld);
     my_signal(SIGPIPE, SIG_IGN);
+
+    if (daemon_mode) {
+        daemon(0, 0);
+    }
 
     int listenfd = tcp_listen(port);
     if (listenfd < 0) {
