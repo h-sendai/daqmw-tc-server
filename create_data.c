@@ -18,7 +18,7 @@ struct raw_data create_data(unsigned int trigger_count)
 {
     struct raw_data raw_data;
 
-    raw_data.magic_word    = htonl(0x12345678);
+    raw_data.magic_word    = htonl(0x01234567);
     raw_data.data_length   = htonl(4*2*1024);
     raw_data.trigger_count = htonl(trigger_count);
     raw_data.footer        = htonl(0x89abcdef);
