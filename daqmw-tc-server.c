@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
     struct sockaddr_in remote;
     socklen_t addr_len = sizeof(struct sockaddr_in);
 
-    while ( (c = getopt(argc, argv, "dDhp:t:")) != -1) {
+    while ( (c = getopt(argc, argv, "dDhp:r:")) != -1) {
         switch (c) {
             case 'd':
                 debug = 1;
