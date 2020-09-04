@@ -6,6 +6,7 @@
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,6 +14,22 @@
 #include <unistd.h>
 
 #include "raw_data.h"
+
+unsigned short create_sin_data(int w, int ch, int trigger_count)
+{
+    double x;
+    int y;
+
+    double pi     = 3.1416;
+    double amp    = 2000.0;
+    double offset = 2048;
+    double a      = 0.1*trigger_count;
+
+    x = (double) w / 1024.0 * 2.0 * pi;
+    y = (unsigned short) amp * sin(x - a) + offset;
+
+    return y;
+}
 
 struct raw_data create_data(unsigned int trigger_count)
 {
@@ -26,20 +43,26 @@ struct raw_data create_data(unsigned int trigger_count)
     unsigned short n_ch = 4;
     int n_sample        = 1024;
 
+    unsigned short data = 0;
 
     for (int sample_num = 0; sample_num < n_sample; ++sample_num) { 
         for (unsigned char ch = 0; ch < n_ch; ++ch) {
             unsigned short tmp = (ch << 12);
-            /* 
-             * trivial data (horizontal graph line)
-             * increase 128 each triggers'
-             * 0 for trigger_count 0
-             * 128 for trigger_count 1
-             * 256 for trigger_count 2
-             * :
-             */
             /* change this data value to write another graph line (sine curve etc) */
-            unsigned short data = (trigger_count * 128) % 4096;
+            if (strcmp(data_type, "sin") == 0) { /* data_type: sin */
+                data = create_sin_data(sample_num, ch, trigger_count);
+            }
+            else { /* data_type: const */
+                /* 
+                 * trivial data (horizontal graph line)
+                 * increase 128 each triggers'
+                 * 0 for trigger_count 0
+                 * 128 for trigger_count 1
+                 * 256 for trigger_count 2
+                 * :
+                 */
+                data = (trigger_count * 128) % 4096;
+            }
             tmp = htons(tmp + data);
             raw_data.event_data[sample_num*n_ch + ch] = tmp;
         }

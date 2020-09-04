@@ -10,5 +10,6 @@ struct raw_data {
 };
 
 extern struct raw_data create_data(unsigned int trigger_count);
+extern char *data_type;
 
 #endif

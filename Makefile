@@ -3,7 +3,7 @@ CFLAGS += -g -O2 -Wall
 CFLAGS += -std=gnu99
 # CFLAGS += -pthread
 # LDLIBS += -L/usr/local/lib -lmylib
-# LDLIBS += -lrt
+LDLIBS += -lm
 # LDFLAGS += -pthread
 
 all: $(PROG)

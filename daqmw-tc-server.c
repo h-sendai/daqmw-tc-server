@@ -17,6 +17,7 @@
 
 int debug = 0;
 int daemon_mode = 0;
+char *data_type = "const";
 
 /* command line interface */
 int usage()
@@ -92,7 +93,7 @@ int main(int argc, char *argv[])
     struct sockaddr_in remote;
     socklen_t addr_len = sizeof(struct sockaddr_in);
 
-    while ( (c = getopt(argc, argv, "dDhp:r:")) != -1) {
+    while ( (c = getopt(argc, argv, "dDhp:r:t:")) != -1) {
         switch (c) {
             case 'd':
                 debug = 1;
@@ -110,12 +111,19 @@ int main(int argc, char *argv[])
             case 'r':
                 data_rate = strtol(optarg, NULL, 0);
                 break;
+            case 't':
+                data_type = optarg;
+                break;
             default:
                 break;
         }
     }
     argc -= optind;
     argv += optind;
+
+    if (debug) {
+        fprintf(stderr, "data_type: %s\n", data_type);
+    }
 
     my_signal(SIGCHLD, sig_chld);
     my_signal(SIGPIPE, SIG_IGN);
