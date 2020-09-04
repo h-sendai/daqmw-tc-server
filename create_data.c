@@ -32,7 +32,7 @@ w    x    y
 */
 
     double x;
-    int y;
+    unsigned short y;
 
     double pi     = 3.1416;
     double amp    = 2000.0;
