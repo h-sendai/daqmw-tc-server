@@ -37,7 +37,7 @@ w    x    y
     double pi     = 3.1416;
     double amp    = 2000.0;
     double offset = 2048;
-    double a      = 0.1*trigger_count;
+    double a      = 2*pi*(trigger_count % 24)/24.0;
 
     x = (double) w / 1024.0 * 2.0 * pi;
     y = (unsigned short) amp * sin(x - a) + offset;
