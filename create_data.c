@@ -32,14 +32,14 @@ struct raw_data create_data(unsigned int trigger_count)
             unsigned short tmp = (ch << 12);
             /* 
              * trivial data (horizontal graph line)
-             * increase 32 each triggers'
+             * increase 128 each triggers'
              * 0 for trigger_count 0
-             * 32 for trigger_count 1
-             * 64 for trigger_count 2
+             * 128 for trigger_count 1
+             * 256 for trigger_count 2
              * :
              */
             /* change this data value to write another graph line (sine curve etc) */
-            unsigned short data = (trigger_count * 32) % 4096;
+            unsigned short data = (trigger_count * 128) % 4096;
             tmp = htons(tmp + data);
             raw_data.event_data[sample_num*n_ch + ch] = tmp;
         }
