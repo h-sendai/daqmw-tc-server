@@ -17,6 +17,20 @@
 
 unsigned short create_sin_data(int w, int ch, int trigger_count)
 {
+/*
+double pi = 3.1416;
+w    x    y
+0    0    sin(0)    = 0
+1
+2
+:
+256  pi/2 sin(pi/2) = 1
+:
+512  pi   sin(pi)   = 0
+:
+1024 2*pi sin(2*pi) = 0
+*/
+
     double x;
     int y;
 
