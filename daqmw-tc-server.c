@@ -128,13 +128,13 @@ int main(int argc, char *argv[])
     my_signal(SIGCHLD, sig_chld);
     my_signal(SIGPIPE, SIG_IGN);
 
-    if (daemon_mode) {
-        daemon(0, 0);
-    }
-
     int listenfd = tcp_listen(port);
     if (listenfd < 0) {
         errx(1, "tcp_listen");
+    }
+
+    if (daemon_mode) {
+        daemon(0, 0);
     }
 
     for ( ; ; ) {
